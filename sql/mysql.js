@@ -47,5 +47,36 @@ const users = `create table if not exists users(
     PRIMARY KEY (id)
 );`
 
+const posts = `create table if not exists posts(
+    id INT NOT NULL AUTO_INCREMINT,
+    name VARCHAR(100) NOT NULL,
+    title VARCHAR(40) NOT NULL,
+    content VARCHAR(120) NOT NULL,
+    uid VARCHAR(40) NOT NULL, 
+    moment VARCHAR(40) NOT NULL,
+    comments VARCHAR(40) NOT NULL DEFAULT '0',
+    pv VARCHAR(40) NOT NULL DEFAULT '0',
+    PRIMARY KEY(id)
+);`
+
+const comment = `create table if not exists comment(
+    id INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    content VARCCHAR(40) NOT NULL,
+    postid VARCHAR(40) NOT NULL,
+    MRMARY KEY(id)
+);`
 
 createTbale(users);
+
+createTbale(posts);
+
+createTbale(comment);
+
+//注册用户
+const insertData = function(value){
+    let _sql = "insert into users(name,pass) values(?,?);"
+    return query(_sql,value);
+}
+
+//删除用户(测试使用)
