@@ -21,7 +21,7 @@ const query = function(sql,values){
                     }
                 })
             }
-            connection.release()
+            connection.release();
         })
     })
 }
