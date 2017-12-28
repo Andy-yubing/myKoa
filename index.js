@@ -25,6 +25,7 @@ app.use(session({
     store: new MysqlStore(sessionMysqlConfig)
 }))
 
+
 // 配置静态资源加载中间件
 app.use(koaStatic(
     path.join(__dirname, './public')
@@ -39,10 +40,10 @@ app.use(views(path.join(__dirname, './views'), {
 app.use(bodyParser());
 
 // app.use(require('./routers/signin.js').routes())
-//app.use(require('./routers/signup.js').routes())
+app.use(require('./routers/signup.js').routes())
 // app.use(require('./routers/posts.js').routes())
 // app.use(require('./routers/signout.js').routes())
 
 
 // 监听在3000端口
-app.listen(3000)
+app.listen(3000);

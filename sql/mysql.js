@@ -80,3 +80,9 @@ const insertData = function(value){
 }
 
 //删除用户(测试使用)
+
+
+
+module.exports = {
+    insertData,
+}
