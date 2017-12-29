@@ -1,20 +1,23 @@
-var Koa = require('koa');
-var path = require('path');
-var bodyParser = require('koa-bodyparser');
-var ejs = require('ejs');
-var session = require('koa-session-minimal');
-var MysqlStore = require('koa-mysql-session');
-var router = require('koa-router');
-var views = require('koa-views');
-var koaStatic = require('koa-static');
-var config = require('./config/default.js');
+const Koa = require('koa');
+const path = require('path');
+const bodyParser = require('koa-bodyparser');
+const ejs = require('ejs');
+const session = require('koa-session-minimal');
+const MysqlStore = require('koa-mysql-session');
+//const router = require('koa-router');
+const views = require('koa-views');
+const koaStatic = require('koa-static');
+const config = require('./config/default.js');
+const signup = require("./routers/signup");
 
-var app = new Koa();
+console.log(signup);
+
+const app = new Koa();
 
 // session存储配置
 const sessionMysqlConfig = {
     user: 'root',
-    password: 'root',
+    password: '123456',
     database: 'nodesql',
     host: 'localhost',
 }
@@ -32,17 +35,17 @@ app.use(koaStatic(
 ))
 
 // 配置服务端模板渲染引擎中间件
-app.use(views(path.join(__dirname, './views'), {
+app.use(views(path.join(__dirname, './view'), {
     extension: 'ejs'
 }))
 
 // 使用表单解析中间件
 app.use(bodyParser());
 
-// app.use(require('./routers/signin.js').routes())
-app.use(require('./routers/signup.js').routes())
-// app.use(require('./routers/posts.js').routes())
-// app.use(require('./routers/signout.js').routes())
+
+
+//koa-router
+app.use(signup.routes());
 
 
 // 监听在3000端口

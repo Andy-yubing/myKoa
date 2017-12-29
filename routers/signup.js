@@ -1,18 +1,18 @@
-// const Router = require('koa-router');
-
-// const router = new Router();
-// //注册页
-// router.get('./signup',async (ctx,next)=>{
-//     await ctx.render('signup',{})
-// })
+const Router = require('koa-router');
+const userModel = require('../sql/mysql');
+const md5 = require('md5');
 
 
-// module.exports = router;
 
-var router = require('koa-router')();
-// GET '/signup' 注册页
-router.get('/signup', async (ctx, next) => {
-    await ctx.render('signup', {
-    })
+const router = new Router();
+//注册页
+router.get('/signup',async (ctx,next)=>{
+    console.log(ctx.session)
+    await ctx.render('signup', { session: ctx.session})
 })
-module.exports = router
+
+
+
+
+module.exports = router;
+
