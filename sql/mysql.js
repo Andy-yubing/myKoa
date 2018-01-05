@@ -8,20 +8,20 @@ const pool = mysql.createPool({
 });
 
 const query = function(sql,values){
-    return new Promise(function(reslove, reject){
-        pool.getConnection((err,connection)=>{
-            if(err){
-                reject(err);
-            }else{
-                connection.query(sql,values,(err,results)=>{
-                    if(err){
-                        reject(err);
-                    }else{
-                        resolve(results);
+    return new Promise((resolve, reject) => {
+        pool.getConnection(function (err, connection) {
+            if (err) {
+                resolve(err)
+            } else {
+                connection.query(sql, values, (err, rows) => {
+                    if (err) {
+                        reject(err)
+                    } else {
+                        resolve(rows)
                     }
+                    connection.release()
                 })
             }
-            connection.release();
         })
     })
 }
@@ -48,7 +48,7 @@ const users = `create table if not exists users(
 );`
 
 const posts = `create table if not exists posts(
-    id INT NOT NULL AUTO_INCREMINT,
+    id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(100) NOT NULL,
     title VARCHAR(40) NOT NULL,
     content VARCHAR(120) NOT NULL,
@@ -62,9 +62,9 @@ const posts = `create table if not exists posts(
 const comment = `create table if not exists comment(
     id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(100) NOT NULL,
-    content VARCCHAR(40) NOT NULL,
+    content VARCHAR(40) NOT NULL,
     postid VARCHAR(40) NOT NULL,
-    MRMARY KEY(id)
+    PRIMARY KEY(id)
 );`
 
 createTbale(users);
@@ -79,10 +79,8 @@ const insertData = function(value){
     return query(_sql,value);
 }
 
+
 //删除用户(测试使用)
-
-
-
 module.exports = {
     insertData,
 }
