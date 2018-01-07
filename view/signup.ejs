@@ -18,3 +18,29 @@
 	</form>
 </div>
 <% include footer %>
+
+<script>
+	$(".submit").click(()=>{
+		if ($('input[name=name]').val().trim() == '') {
+			$('.error').text('请输入用户名')
+			fade('.error')
+		}else if ($('input[name=name]').val().match(/[<'">]/g)) {
+			$('.error').text('请输入合法字符')
+			fade('.error')
+		}else{
+			$.ajax({
+				url: "/signup",
+				data: $(".from").serialize(),
+				type: "post",
+				cache: false,
+				dataType: 'json',
+				success: function(msg){
+					console.log(msg);
+					if(msg.data == 1){
+						
+					}
+				}
+			})
+		}
+	})
+</script>

@@ -17,7 +17,7 @@ const app = new Koa();
 // session存储配置
 const sessionMysqlConfig = {
     user: 'root',
-    password: '123456',
+    password: 'root',
     database: 'nodesql',
     host: 'localhost',
 }
