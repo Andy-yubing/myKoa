@@ -13,10 +13,16 @@ router.get('/signup',async (ctx,next)=>{
 })
 
 //post 注册
-router.post('/signup',async(ctx,next) =>{
+router.post('/signup', async(ctx,next) =>{
     console.log(ctx.request.body);
+    var user = {
+        name: ctx.request.body.name,
+        pass: ctx.request.body.password,
+        repeatpass: ctx.request.body.repeatpass
+    }
+    await userModel.findDataByName(user.name)
     
-})
+}) 
 
 module.exports = router;
 

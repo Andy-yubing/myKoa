@@ -4,7 +4,7 @@ const bodyParser = require('koa-bodyparser');
 const ejs = require('ejs');
 const session = require('koa-session-minimal');
 const MysqlStore = require('koa-mysql-session');
-//const router = require('koa-router');
+const router = require('koa-router');
 const views = require('koa-views');
 const koaStatic = require('koa-static');
 const config = require('./config/default.js');
@@ -17,7 +17,7 @@ const app = new Koa();
 // session存储配置
 const sessionMysqlConfig = {
     user: 'root',
-    password: 'root',
+    password: '123456',
     database: 'nodesql',
     host: 'localhost',
 }

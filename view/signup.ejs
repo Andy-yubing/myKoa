@@ -28,9 +28,10 @@
 			$('.error').text('请输入合法字符')
 			fade('.error')
 		}else{
+			console.log($(".form").serialize());
 			$.ajax({
 				url: "/signup",
-				data: $(".from").serialize(),
+				data: $(".form").serialize(),
 				type: "post",
 				cache: false,
 				dataType: 'json',

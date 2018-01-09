@@ -2,7 +2,7 @@ const mysql = require("mysql");
 const pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
-    password: 'root',
+    password: '123456',
     port: '3306',
     database: 'nodesql'
 });
@@ -79,8 +79,17 @@ const insertData = function(value){
     return query(_sql,value);
 }
 
+//通过名字查找用户
+const findDataByName = function(name){
+    let _sql = `
+        select * from users where name="${name}";
+    `
+    return query(_sql)
+}
+
 
 //删除用户(测试使用)
 module.exports = {
     insertData,
+    findDataByName,
 }
