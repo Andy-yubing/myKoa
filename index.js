@@ -29,6 +29,7 @@ app.use(session({
 }))
 
 
+
 // 配置静态资源加载中间件
 app.use(koaStatic(
     path.join(__dirname, './public')

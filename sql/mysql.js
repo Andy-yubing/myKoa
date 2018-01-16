@@ -26,14 +26,11 @@ const query = function(sql,values){
     })
 }
 
-
-
 query().then((value)=>{
     console.log(value);
 },(err)=>{
     console.log(err);
 })
-
 
 const createTbale = (sql)=>{
     query(sql,[]);
