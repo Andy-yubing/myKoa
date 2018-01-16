@@ -3,7 +3,6 @@ const userModel = require('../sql/mysql');
 const md5 = require('md5');
 
 
-
 const router = new Router();
 //注册页
 router.get('/signup',async (ctx,next)=>{
