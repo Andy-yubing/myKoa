@@ -75,7 +75,7 @@ createTbale(comment);
 
 //注册用户
 const insertData = function(value){
-    let _sql = "insert into users(name,pass) values(?,?);"
+    let _sql = "insert into users(name,password) values(?,?);"
     return query(_sql,value);
 }
 
@@ -86,6 +86,7 @@ const findDataByName = function(name){
     `
     return query(_sql)
 }
+
 
 
 //删除用户(测试使用)

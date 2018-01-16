@@ -22,12 +22,16 @@ const sessionMysqlConfig = {
     host: 'localhost',
 }
 
+
+
 //配置session中间件
 app.use(session({
     key: 'USER_SID',
     store: new MysqlStore(sessionMysqlConfig)
 }))
 
+// 使用表单解析中间件
+app.use(bodyParser());
 
 // 配置静态资源加载中间件
 app.use(koaStatic(
@@ -39,13 +43,9 @@ app.use(views(path.join(__dirname, './view'), {
     extension: 'ejs'
 }))
 
-// 使用表单解析中间件
-app.use(bodyParser());
-
-
-
 //koa-router
 app.use(signup.routes());
+
 
 
 // 监听在3000端口
