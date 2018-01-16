@@ -13,10 +13,38 @@ router.get('/signup',async (ctx,next)=>{
 })
 
 //post 注册
-router.post('/signup',async(ctx,next) =>{
+router.post('/signup', async (ctx,next) =>{
     console.log(ctx.request.body);
+    var user = {
+        name: ctx.request.body.name,
+        pass: ctx.request.body.password,
+        repeatpass: ctx.request.body.repeatpass
+    }
+    await userModel.findDataByName(user.name).then(result => {
+        //console.log(result.length);
+        if(result.length){
+            console.log('asdad');
+            try{
+                throw Error(`用户名已经存在`)
+            }catch(err){
+                console.log(err);
+            }
+            ctx.body = {
+                data: 1
+            };
+        } else if (user.pass !== user.repeatpass || user.name ==""){
+            ctx.body = {
+                data: 2
+            };
+        }else{
+            ctx.body = {
+                data: 3 
+            };
+            userModel.insertData([user.name, md5(user.pass)])
+        }
+    })
     
-})
+}) 
 
 module.exports = router;
 
