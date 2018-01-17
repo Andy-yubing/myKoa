@@ -3,7 +3,22 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
-</head>
 	<link rel="stylesheet" href="/index.css">
 	<script src="http://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+	<script>
+		function fade(txt){
+			$('.message').text(txt)
+			$('.message').animate({
+				top:0
+			})
+			setTimeout(function(){
+				$('.message').animate({
+					top: '-100%'
+				})
+			},1500)
+		}
+	</script>
+</head>
+	
+	
 <body>

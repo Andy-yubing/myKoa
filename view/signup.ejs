@@ -38,7 +38,14 @@
 				success: function(msg){
 					console.log(msg);
 					if(msg.data == 1){
-						
+						alert("用户名已存在")
+					}else if(msg.data == 2){
+						alert("输入有误")
+					}else{
+						 alert('注册成功');
+						 setTimeout(()=>{
+							window.location.href="/signin"
+						 },1000)
 					}
 				}
 			})
