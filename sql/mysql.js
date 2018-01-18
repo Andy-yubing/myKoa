@@ -14,9 +14,11 @@ const query = function(sql,values){
                 resolve(err)
             } else {
                 connection.query(sql, values, (err, rows) => {
+                    //console.log(values);
                     if (err) {
                         reject(err)
                     } else {
+                        //console.log(rows);
                         resolve(rows)
                     }
                     connection.release()
@@ -76,6 +78,7 @@ createTbale(comment);
 //注册用户
 const insertData = function(value){
     let _sql = "insert into users(name,password) values(?,?);"
+    //console.log(value);
     return query(_sql,value);
 }
 

@@ -10,6 +10,7 @@ const koaStatic = require('koa-static');
 const config = require('./config/default.js');
 const signup = require("./routers/signup");
 const signin = require("./routers/signin");
+const posts = require("./routers/posts");
 //console.log(signup);
 
 const app = new Koa();
@@ -48,6 +49,8 @@ app.use(views(path.join(__dirname, './view'), {
 app.use(signup.routes());
 //登录
 app.use(signin.routes());
+//首页
+app.use(posts.routes());
 
 
 // 监听在3000端口
