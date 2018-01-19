@@ -26,6 +26,11 @@
                 dataType: 'json',
                 success(result){
                     console.log(result)
+                    if(!result){
+                        alert("密码错误");
+                    }else{
+                        window.locahost.href = "/posts";
+                    }
                 },
                 err(err){
                     console.log(err)

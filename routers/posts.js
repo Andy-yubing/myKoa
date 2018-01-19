@@ -7,5 +7,11 @@ router.get("/",(ctx,next)=>{
     ctx.redirect('/posts');
 })
 router.get("/posts", (ctx, next) => {
-    ctx.render('/posts');
+    /* ctx.render('/posts'); */
+    
+    ctx.render('posts',{
+        session: ctx.session,
+    })
 })
+
+module.exports = router;
