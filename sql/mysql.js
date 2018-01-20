@@ -57,7 +57,7 @@ const posts = `create table if not exists posts(
     uid VARCHAR(40) NOT NULL, 
     moment VARCHAR(40) NOT NULL,
     comments VARCHAR(40) NOT NULL DEFAULT '0',
-    pv VARCHAR(40) NOT NULL DEFAULT '0',
+    pv VARCHAR(40) NOT NULL DEFAULT '0',s
     PRIMARY KEY(id)
 );`
 
@@ -85,15 +85,20 @@ const insertData = function(value){
 //通过名字查找用户
 const findDataByName = function(name){
     let _sql = `
-        select * from users where name="${name}";
+        select * from users where name="${name};"
     `
-    return query(_sql)
+    return query(_sql);
+}
+
+//查询所有文章
+const findAllPost = ()=>{
+    let _sql = `select * from posts where limit 0,5;`
+    return query(_sql);
 }
 
 
-
-//删除用户(测试使用)
 module.exports = {
     insertData,
     findDataByName,
+    findAllPost
 }

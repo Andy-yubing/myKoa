@@ -6,12 +6,17 @@ const router = new Router();
 router.get("/",(ctx,next)=>{
     ctx.redirect('/posts');
 })
-router.get("/posts", (ctx, next) => {
-    /* ctx.render('/posts'); */
-    
-    ctx.render('posts',{
+router.get("/posts",async (ctx, next) => {
+    console.log(ctx);
+    if (ctx.request.querystring){
+        
+    }else{
+        
+    }
+    await ctx.render('posts',{
         session: ctx.session,
     })
 })
+
 
 module.exports = router;
