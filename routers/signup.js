@@ -8,6 +8,7 @@ const router = new Router();
 router.get('/signup',async (ctx,next)=>{
     /* console.log(ctx.render)
     console.log(ctx.session) */
+    console.log(ctx.session);
     await ctx.render('signup', { session: ctx.session})
 })
 
@@ -22,7 +23,6 @@ router.post('/signup', async (ctx,next) =>{
     await userModel.findDataByName(user.name).then(result => {
         //console.log(result.length);
         if(result.length){
-            console.log('asdad');
             try{
                 throw Error(`用户名已经存在`)
             }catch(err){
