@@ -20,3 +20,5 @@ router.get("/posts",async (ctx, next) => {
 
 
 module.exports = router;
+
+

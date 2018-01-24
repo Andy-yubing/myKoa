@@ -57,7 +57,7 @@ const posts = `create table if not exists posts(
     uid VARCHAR(40) NOT NULL, 
     moment VARCHAR(40) NOT NULL,
     comments VARCHAR(40) NOT NULL DEFAULT '0',
-    pv VARCHAR(40) NOT NULL DEFAULT '0',s
+    pv VARCHAR(40) NOT NULL DEFAULT '0',
     PRIMARY KEY(id)
 );`
 
@@ -77,7 +77,7 @@ createTbale(comment);
 
 //注册用户
 const insertData = function(value){
-    let _sql = "insert into users(name,password) values(?,?);"
+    let _sql = "insert into users(name,password) values(?,?)";
     //console.log(value);
     return query(_sql,value);
 }
@@ -85,14 +85,14 @@ const insertData = function(value){
 //通过名字查找用户
 const findDataByName = function(name){
     let _sql = `
-        select * from users where name="${name};"
+        select * from users where name="${name}";
     `
     return query(_sql);
 }
 
 //查询所有文章
 const findAllPost = ()=>{
-    let _sql = `select * from posts where limit 0,5;`
+    let _sql = `select * from posts where limit 0,5`;
     return query(_sql);
 }
 

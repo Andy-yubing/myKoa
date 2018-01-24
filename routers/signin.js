@@ -14,11 +14,15 @@ router.get("/signin",async(ctx,next)=>{
 router.post("/signin", async (ctx, next) => {
     
     const name = ctx.request.body.name;
+    
     const pass = ctx.request.body.password;
+
     await userModel.findDataByName(name).then(result => {
-        console.log(result);
+
+        //console.log(result);
         
         const res = JSON.parse(JSON.stringify(result));
+        console.log(res[0]['id']);
         
         if (name == res[0]['name'] && md5(pass) === res[0].password){
             ctx.body = 'true';
