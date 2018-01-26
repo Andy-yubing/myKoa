@@ -89,9 +89,10 @@ const findDataByName = function(name){
 
 //查询所有文章
 const findAllPost = ()=>{
-    let _sql = `select * from posts where limit 0,5`;
+    let _sql = `select * from posts limit 0,5`;
     return query(_sql);
 }
+
 
 
 module.exports = {
