@@ -24,6 +24,7 @@ router.post("/signin", async (ctx, next) => {
         
         console.log(result);
         const res = JSON.parse(JSON.stringify(result));
+        console.log(res);
         
         //console.log(res[0]['id']);
         
@@ -36,6 +37,6 @@ router.post("/signin", async (ctx, next) => {
     }).catch(err => {
         ctx.body = 'false';
         console.log('用户名或密码错误!')
-    })
+    })  
 })
 module.exports = router;
