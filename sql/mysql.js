@@ -39,11 +39,12 @@ const createTbale = (sql)=>{
 }
 
 //建表
-const users = `create table if not exists users(
-    id INT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(100) NOT NULL,
-    password VARCHAR(40) NOT NULL,
-    PRIMARY KEY (id)
+const users = 
+    `create table if not exists users(
+     id INT NOT NULL AUTO_INCREMENT,
+     name VARCHAR(100) NOT NULL,
+     pass VARCHAR(40) NOT NULL,
+     PRIMARY KEY (id)
 );`
 
 const posts = `create table if not exists posts(
