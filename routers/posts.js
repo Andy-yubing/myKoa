@@ -27,6 +27,18 @@ router.get("/posts", async (ctx, next) => {
     })
 })
 
+
+
+
+
+
+
+//用户登出
+router.get("/signout", async (ctx, next) => {
+    ctx.session = null;
+    console.log('登出成功');
+    ctx.body = true;
+})
 module.exports = router;
 
 

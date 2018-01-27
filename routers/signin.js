@@ -15,9 +15,8 @@ router.get("/signin",async(ctx,next)=>{
 
 
 router.post("/signin", async (ctx, next) => {
-    
+    //获取用户登录时的用户名,密码
     const name = ctx.request.body.name;
-    
     const pass = ctx.request.body.password;
     
     await userModel.findDataByName(name).then(result => {
@@ -38,4 +37,6 @@ router.post("/signin", async (ctx, next) => {
         console.log('用户名或密码错误!')
     })
 })
+
+
 module.exports = router;
