@@ -94,10 +94,16 @@ const findAllPost = ()=>{
     return query(_sql);
 }
 
+//查找用户
+const findUserData = (name)=>{
+    let _sql = `select * from users where name="${name}"`;
+    return query(_sql);
+}
 
 
 module.exports = {
     insertData,
     findDataByName,
-    findAllPost
+    findAllPost,
+    findUserData
 }
