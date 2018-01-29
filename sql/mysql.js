@@ -44,6 +44,8 @@ const users =
      id INT NOT NULL AUTO_INCREMENT,
      name VARCHAR(100) NOT NULL,
      pass VARCHAR(40) NOT NULL,
+     avator VARCHAR(100) NOT NULL,
+     moment VARCHAR(100) NOT NULL,
      PRIMARY KEY (id)
 );`
 
@@ -53,9 +55,10 @@ const posts = `create table if not exists posts(
     title VARCHAR(40) NOT NULL,
     content VARCHAR(120) NOT NULL,
     uid VARCHAR(40) NOT NULL, 
-    moment VARCHAR(40) NOT NULL,
-    comments VARCHAR(40) NOT NULL DEFAULT '0',
-    pv VARCHAR(40) NOT NULL DEFAULT '0',
+    moment VARCHAR(100) NOT NULL,
+    avator VARCHAR(100) NOT NULL,
+    comments VARCHAR(100) NOT NULL,
+    pv INT,
     PRIMARY KEY(id)
 );`
 
@@ -64,6 +67,8 @@ const comment = `create table if not exists comment(
     name VARCHAR(100) NOT NULL,
     content VARCHAR(40) NOT NULL,
     postid VARCHAR(40) NOT NULL,
+    avator VARCHAR(100) NOT NULL,
+    moment VARCHAR(100) NOT NULL,
     PRIMARY KEY(id)
 );`
 
@@ -100,10 +105,17 @@ const findUserData = (name)=>{
     return query(_sql);
 }
 
+//发表文章
+const insertPosts = (values)=>{
+    let _sql = `insert into posts(name,title,content,uid,moment,avator,comments,pv) values(?,?,?,?,?,?,?,?)`;
+    
+    return query(_sql,values);
+}
 
 module.exports = {
     insertData,
     findDataByName,
     findAllPost,
-    findUserData
+    findUserData,
+    insertPosts
 }

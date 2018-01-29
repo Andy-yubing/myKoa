@@ -35,18 +35,35 @@ router.get("/create",async (ctx,next)=>{
 router.post("/create", async (ctx, next) => {
     console.log(ctx);
     
-    const titText = ctx.request.body.title,
+    let titText = ctx.request.body.title,
           content = ctx.request.body.content,
           id = ctx.session.id,
           name = ctx.session.user,
           time = moment().format('YYYY-MM-DD HH:mm:ss'),
-          avator = "";
-    console.log(name);
-       
+          avator = "",
+          newTitle = titText.replace(/[<">']/g, (target) => {
+            return {
+                '<': '&lt;',
+                '"': '&quot;',
+                '>': '&gt;',
+                "'": '&#39;'
+            }[target]
+        });
+
+    console.log(newTitle);
+            
     await userModel.findUserData(name).then(res=>{
         console.log(res);
+        avator = res[0]['avator']
     })
-    //ctx.body = true;
+    
+    await userModel.insertPosts([name, newTitle, content, id, time, avator, comments, pv]).then(res => {
+        ctx.body = true;
+    }).catch(err => {
+        console.log(err);
+        ctx.body = false;
+    })
+
 })
 
 
