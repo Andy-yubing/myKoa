@@ -9,26 +9,40 @@ router.get("/",(ctx,next)=>{
 
 router.get("/posts", async (ctx, next) => {
      
-    let res = '';
-    
-    console.log(ctx);  
+    let res = '', name = ctx.request.querystring.split("=")[1], postsLength = "";
     
     if (ctx.request.querystring){
-        console.log('213');
+        await userModel.findDataByUser(name).then(result => {
+            console.log(result);
+            postsLength = result.length;
+        })
+        await userModel.findPostByUserPage(name, 1).then(result => {
+            res = result
+        })
+        await ctx.render('posts', {
+            session: ctx.session,
+            posts: res,
+            postsPageLength: postsLength
+        })
     }else{
         await userModel.findAllPost().then(result => {
-            res = JSON.parse(JSON.stringify(result));
-            console.log(res);
+            postsLength = result.length;
+        })
+        await userModel.findPostByPage(1).then(result => {
+            res = result
+        })
+        await ctx.render('posts', {
+            session: ctx.session,
+            posts: res,
+            postsPageLength: postsLength
         })
     }
-    await ctx.render('posts',{
-        session: ctx.session,
-        posts: res
-    })
+
+    
 })
 
 
-//发表文章
+//发表文章发表文章发表文章发表文章
 router.get("/create",async (ctx,next)=>{
     await ctx.render("create", { session: ctx.session})
 })
@@ -50,14 +64,14 @@ router.post("/create", async (ctx, next) => {
             }[target]
         });
 
-    console.log(newTitle);
+    //console.log(newTitle);
             
     await userModel.findUserData(name).then(res=>{
         console.log(res);
         avator = res[0]['avator']
     })
     
-    await userModel.insertPosts([name, newTitle, content, id, time, avator, comments, pv]).then(res => {
+    await userModel.insertPosts([name, newTitle, content, id, time, avator]).then(res => {
         ctx.body = true;
     }).catch(err => {
         console.log(err);

@@ -95,7 +95,7 @@ const findDataByName = function(name){
 
 //查询所有文章
 const findAllPost = ()=>{
-    let _sql = `select * from posts limit 0,5`;
+    let _sql = `select * from posts`;
     return query(_sql);
 }
 
@@ -107,15 +107,36 @@ const findUserData = (name)=>{
 
 //发表文章
 const insertPosts = (values)=>{
-    let _sql = `insert into posts(name,title,content,uid,moment,avator,comments,pv) values(?,?,?,?,?,?,?,?)`;
-    
+    let _sql = `insert into posts(name,title,content,uid,moment,avator) values(?,?,?,?,?,?)`;
     return query(_sql,values);
 }
+
+//查询用户下的数据
+const findDataByUser = (user)=>{
+    let _sql = `select * from posts where name="${user}"`;
+    return query(_sql);
+}
+//查询用户分页文章
+const findPostByUserPage = (name,page)=>{
+    let _sql = `select * from posts where name="${name}" order by id desc limit ${(page-1)*10},10`;
+    return query(_sql); 
+}
+//查询分页文章
+const findPostByPage = (page) => {
+    let _sql = `select * from posts order by id desc limit ${(page - 1) * 10},10`;
+    
+    return query(_sql);
+}
+
+
 
 module.exports = {
     insertData,
     findDataByName,
     findAllPost,
     findUserData,
-    insertPosts
+    insertPosts,
+    findDataByUser,
+    findPostByUserPage,
+    findPostByPage
 }
