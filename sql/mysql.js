@@ -124,11 +124,20 @@ const findPostByUserPage = (name,page)=>{
 //查询分页文章
 const findPostByPage = (page) => {
     let _sql = `select * from posts order by id desc limit ${(page - 1) * 10},10`;
-    
     return query(_sql);
 }
 
+//根据id查询数据
+const findIdContent = (tableName,id)=>{
+    let _sql = `select * from ${tableName} where id="${id}"`;
+    return query(_sql);
+}
 
+//插入评论的数据
+const insertComment = (values)=>{
+    let _sql = `insert into comment(name,content,postid,moment,avator) values(?,?,?,?,?)`;
+    return query(_sql, values);
+}
 
 module.exports = {
     insertData,
@@ -138,5 +147,7 @@ module.exports = {
     insertPosts,
     findDataByUser,
     findPostByUserPage,
-    findPostByPage
+    findPostByPage,
+    findIdContent,
+    insertComment
 }

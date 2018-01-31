@@ -30,6 +30,7 @@
   "devDependencies": {
     "koa-bodyparser": "^4.2.0",
     "koa-static-cache": "^5.1.1",
+    "markdown-it": "^8.4.0",
     "moment": "^2.20.1"
   }
 }

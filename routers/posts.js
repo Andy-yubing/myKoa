@@ -2,7 +2,7 @@ const Router = require('koa-router');
 const userModel = require('../sql/mysql');
 const moment = require("moment");
 const router = new Router();
-
+const md = require('markdown-it')();
 router.get("/",(ctx,next)=>{
     ctx.redirect('/posts');
 })
@@ -10,6 +10,8 @@ router.get("/",(ctx,next)=>{
 router.get("/posts", async (ctx, next) => {
      
     let res = '', name = ctx.request.querystring.split("=")[1], postsLength = "";
+
+    console.log(name);
     
     if (ctx.request.querystring){
         await userModel.findDataByUser(name).then(result => {
@@ -48,7 +50,6 @@ router.get("/create",async (ctx,next)=>{
 })
 router.post("/create", async (ctx, next) => {
     console.log(ctx);
-    
     let titText = ctx.request.body.title,
           content = ctx.request.body.content,
           id = ctx.session.id,
@@ -65,7 +66,7 @@ router.post("/create", async (ctx, next) => {
         });
 
     //console.log(newTitle);
-            
+             
     await userModel.findUserData(name).then(res=>{
         console.log(res);
         avator = res[0]['avator']
@@ -77,11 +78,45 @@ router.post("/create", async (ctx, next) => {
         console.log(err);
         ctx.body = false;
     })
-
 })
 
+//单篇文章页详情
+router.get("/posts/:id",async (ctx,next)=>{
+    //console.log(ctx);
+    let id = ctx.params.id, res = "", comment_res = "";
+    await userModel.findIdContent('posts',id).then((result)=>{
+        //console.log(result);
+        res = result;
+    })
+    await userModel.findIdContent('comment', id).then((result) => {
+        //console.log(result);
+        comment_res = result;
 
+    })
+    await ctx.render('leave', {
+        session: ctx.session,
+        posts: res[0],
+        commentPageLenght: comment_res.length
+    })
+})
 
+//发表留言
+router.post("/:id",async (ctx,next)=>{
+    //console.log(ctx);
+    let commentCon = ctx.request.body.content,
+        time = moment().format('YYYY-MM-DD HH:mm:ss'),
+        name = ctx.session.user,
+        res_comments = "",avator = "",
+        postid = ctx.params.id;
+    await userModel.findUserData(name).then((result)=>{
+        //console.log(result);
+        avator = result[0].avator;
+    });
+    await userModel.insertComment([name, md.render(commentCon), postid, time, avator]).then((res)=>{
+        console.log(res);
+    })
+    
+})
 
 
 
