@@ -139,6 +139,17 @@ const insertComment = (values)=>{
     return query(_sql, values);
 }
 
+//更新文章评论数
+const updatePostComment = (values)=>{
+    let _sql = `update posts set comments=? where id=?`;
+    return query(_sql,values);
+}
+
+//评论分页
+const findCommentByPage = (postid,page) =>{
+    let _sql = `select * from comment where "${id = postid}" order by id desc`;
+}
+
 module.exports = {
     insertData,
     findDataByName,
@@ -149,5 +160,6 @@ module.exports = {
     findPostByUserPage,
     findPostByPage,
     findIdContent,
-    insertComment
+    insertComment,
+    updatePostComment
 }

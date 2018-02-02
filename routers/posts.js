@@ -83,7 +83,7 @@ router.post("/create", async (ctx, next) => {
 //单篇文章页详情
 router.get("/posts/:id",async (ctx,next)=>{
     //console.log(ctx);
-    let id = ctx.params.id, res = "", comment_res = "";
+    let id = ctx.params.id, res = "", comment_res = "", pageOne = "";
     await userModel.findIdContent('posts',id).then((result)=>{
         //console.log(result);
         res = result;
@@ -116,6 +116,14 @@ router.post("/:id",async (ctx,next)=>{
         console.log(res);
     })
     
+    await userModel.findIdContent("posts", postid).then((res)=>{
+        res_comments =  res[0].comments;
+        res_comments += 1;
+    })
+
+    await userModel.updatePostComment(res_comments, postid).then((res)=>{
+        console.log(res);
+    })
 })
 
 
