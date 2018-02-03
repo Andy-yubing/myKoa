@@ -147,7 +147,14 @@ const updatePostComment = (values)=>{
 
 //评论分页
 const findCommentByPage = (postid,page) =>{
-    let _sql = `select * from comment where "${id = postid}" order by id desc`;
+    let _sql = `select * from comment where postid = "${postid}" order by id desc limit ${(page - 1) * 10},10`;
+    return query(_sql);
+}
+
+//更新评论数
+const updatePostPv = (values) =>{
+    let _sql = `update posts set pv=?  where id=?`;
+    return query(_sql,values);
 }
 
 module.exports = {
@@ -161,5 +168,7 @@ module.exports = {
     findPostByPage,
     findIdContent,
     insertComment,
-    updatePostComment
+    updatePostComment,
+    findCommentByPage,
+    updatePostPv
 }

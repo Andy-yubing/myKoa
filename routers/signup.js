@@ -18,7 +18,8 @@ router.post('/signup', async (ctx,next) =>{
     var user = {
         name: ctx.request.body.name,
         pass: ctx.request.body.password,
-        repeatpass: ctx.request.body.repeatpass
+        repeatpass: ctx.request.body.repeatpass,
+        avator: ctx.request.body.avator
     }
     await userModel.findDataByName(user.name).then(result => {
         //console.log(result.length);

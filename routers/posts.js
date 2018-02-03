@@ -83,20 +83,33 @@ router.post("/create", async (ctx, next) => {
 //单篇文章页详情
 router.get("/posts/:id",async (ctx,next)=>{
     //console.log(ctx);
-    let id = ctx.params.id, res = "", comment_res = "", pageOne = "";
+    let id = ctx.params.id, res = "", comment_res = "", pageOne = "" , pv = "";
+    
     await userModel.findIdContent('posts',id).then((result)=>{
         //console.log(result);
         res = result;
+        pv = parseInt(result[0].pv);  
+        pv += 1;
     })
     await userModel.findIdContent('comment', id).then((result) => {
         //console.log(result);
         comment_res = result;
-
     })
+    console.log(pv);
+    await userModel.updatePostPv([pv,id]).then((result)=>{
+        console.log(result);
+    })
+
+    await userModel.findCommentByPage(id, 1).then((result) => {
+        //console.log(result);
+        pageOne = result;
+    })
+    
     await ctx.render('leave', {
         session: ctx.session,
         posts: res[0],
-        commentPageLenght: comment_res.length
+        commentPageLenght: comment_res.length,
+        pageOne: pageOne,
     })
 })
 
@@ -119,10 +132,13 @@ router.post("/:id",async (ctx,next)=>{
     await userModel.findIdContent("posts", postid).then((res)=>{
         res_comments =  res[0].comments;
         res_comments += 1;
+        console.log(res_comments);
     })
 
-    await userModel.updatePostComment(res_comments, postid).then((res)=>{
-        console.log(res);
+    await userModel.updatePostComment([res_comments, postid]).then((res)=>{
+       ctx.body = true;
+    }).catch(()=>{
+       ctx.body = false; 
     })
 })
 
