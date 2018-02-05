@@ -37,7 +37,21 @@
 				this.value = '';
 				return;
 			}
-
+			
+			//console.log(/image/g.test(this.files[0].type))
+			if(!/image/g.test(this.files[0].type)){
+				fade("请上传图片文件");
+				$('#avatorVal').val('')
+				$('form .preview').attr('src', '')
+				$('form .preview').fadeOut()
+				return false;
+			}		
+			fileReader.readAsDataURL(file);
+			fileReader.onload = function (e){
+				console.log(e);
+				console.log(this);
+			}
+			
 		}
 	})
 
@@ -76,3 +90,5 @@
 		}
 	})
 </script>
+
+https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wxc73c23da21eccd09&secret= 876c92afd73e2af19b18c9d24b97381a
