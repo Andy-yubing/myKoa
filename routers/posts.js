@@ -86,7 +86,7 @@ router.get("/posts/:id",async (ctx,next)=>{
     let id = ctx.params.id, res = "", comment_res = "", pageOne = "" , pv = "";
     
     await userModel.findIdContent('posts',id).then((result)=>{
-        //console.log(result);
+        console.log(result[0]);
         res = result;
         pv = parseInt(result[0].pv);  
         pv += 1;
@@ -95,11 +95,11 @@ router.get("/posts/:id",async (ctx,next)=>{
         //console.log(result);
         comment_res = result;
     })
-    console.log(pv);
+    //console.log(pv);
     await userModel.updatePostPv([pv,id]).then((result)=>{
-        console.log(result);
+        //console.log(result);
     })
-
+    
     await userModel.findCommentByPage(id, 1).then((result) => {
         //console.log(result);
         pageOne = result;
@@ -113,6 +113,37 @@ router.get("/posts/:id",async (ctx,next)=>{
     })
 })
 
+//<%= posts.id %>/comment/" + id + "/remove
+
+//删除文章页详情评论
+router.post("/posts/:postId/comment/:commentId/remove", async (ctx, next) => {
+    console.log(ctx);
+    let commentID = ctx.params.commentId , postID = ctx.params.postId;
+    await userModel.deletePostDetails(commentID).then((res)=>{
+        ctx.body = {
+            data: 1
+        }
+    }).catch(()=>{
+        ctx.body = {
+            data: 2
+        }
+    })
+})
+
+//删除留言
+router.post("/posts/:id/remove",async (ctx,next)=>{
+    console.log(ctx);
+    let postId = ctx.params.id;
+    await userModel.deletePost(postId).then((res)=>{
+        ctx.body = {
+            data: 1
+        }
+    }).catch((err)=>{
+        ctx.body = {
+            data: 2
+        }
+    })
+})
 //发表留言
 router.post("/:id",async (ctx,next)=>{
     //console.log(ctx);
@@ -142,6 +173,15 @@ router.post("/:id",async (ctx,next)=>{
     })
 })
 
+//编辑单篇文章
+router.get("/posts/:id/edit",async (ctx,next)=>{
+    console.log(ctx);
+    let postsId = ctx.params.id,
+        id = ctx.session.id,
+        postId = ctx.params.postId,
+        
+})
+
 
 
 //用户登出
@@ -150,6 +190,11 @@ router.get("/signout", async (ctx, next) => {
     console.log('登出成功');
     ctx.body = true;
 })
+
+
+
+
+
 module.exports = router;
 
 

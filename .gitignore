@@ -5,6 +5,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+images/*.png 
+
 # Runtime data
 pids
 *.pid
@@ -57,3 +59,7 @@ typings/
 # dotenv environment variables file
 .env
 
+public/images/17oieok6nnz1517908690022.png
+public/images/64aybt73qs1517908518330.png
+public/images/64aybt73qs1517908518330.png
+public/images/6o8tb2hjly1517967894986.png

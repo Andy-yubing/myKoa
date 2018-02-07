@@ -1,8 +1,8 @@
 const Router = require('koa-router');
 const userModel = require('../sql/mysql');
 const md5 = require('md5');
-
-
+const moment = require("moment");
+const fs = require("fs");
 const router = new Router();
 //注册页
 router.get('/signup',async (ctx,next)=>{
@@ -21,6 +21,7 @@ router.post('/signup', async (ctx,next) =>{
         repeatpass: ctx.request.body.repeatpass,
         avator: ctx.request.body.avator
     }
+   
     await userModel.findDataByName(user.name).then(result => {
         //console.log(result.length);
         if(result.length){
@@ -37,10 +38,28 @@ router.post('/signup', async (ctx,next) =>{
                 data: 2
             };
         }else{
-            ctx.body = {
-                data: 3 
-            };
-            userModel.insertData([user.name, md5(user.pass)])
+            
+            let base64Data = user.avator.replace(/^data:image\/\w+;base64,/, "");
+            let dataBuffer = new Buffer(base64Data,'base64');
+            let getName = Number(Math.random().toString().substr(3)).toString(36) + Date.now();
+          
+            let upload = new Promise((resolve, reject) => {
+                fs.writeFile('./public/images/' + getName + '.png', dataBuffer, err => {
+                    if (err) {
+                        throw err;
+                        reject(false)
+                    };
+                    resolve(true)
+                    console.log('头像上传成功')
+                });
+            })
+            if (upload){
+                ctx.body = {
+                    data: 3 
+                };
+                userModel.insertData([user.name, md5(user.pass), moment().format('YYYY-MM-DD, h:mm:ss'), getName + '.png']) 
+            }
+            
         }
     })
     

@@ -15,8 +15,8 @@
 		</div>
 		<div>
 			<label>上传头像：</label>
-			<input type="file" name="avator" id="avator">
-			<input type="hidden" id="avatorVal">
+			<input type="file"  id="avator">
+			<input type="hidden" id="avatorVal" name="avator">
 			<img class="preview" alt="预览头像">
 		</div>
 		<div class="submit">注册</div>
@@ -43,13 +43,29 @@
 				fade("请上传图片文件");
 				$('#avatorVal').val('')
 				$('form .preview').attr('src', '')
-				$('form .preview').fadeOut()
+				$('form .preview').fadeOut();
 				return false;
 			}		
 			fileReader.readAsDataURL(file);
 			fileReader.onload = function (e){
 				console.log(e);
 				console.log(this);
+				$('form .preview').attr('src',e.target.result);
+				$('form .preview').fadeIn();
+				let image = new Image();
+				image.src = e.target.result
+				image.onload = ()=>{
+					var canvas = document.createElement('canvas');
+					var ctx = canvas.getContext("2d");
+					canvas.width = 100;
+					canvas.height = 100;
+					ctx.clearRect(0, 0, 100, 100);
+					ctx.drawImage(image, 0, 0, 100, 100);
+					var blob = canvas.toDataURL("image/png");
+					console.log(blob)
+					$('#avatorVal').val(blob)
+				}
+				
 			}
 			
 		}
@@ -58,10 +74,10 @@
 	$(".submit").click(()=>{
 		if ($('input[name=name]').val().trim() == '') {
 			$('.error').text('请输入用户名')
-			fade('.error')
+			fade('用户名或密码没填')
 		}else if ($('input[name=name]').val().match(/[<'">]/g)) {
 			$('.error').text('请输入合法字符')
-			fade('.error')
+			fade('用户名或密码没填')
 		}else{
 			console.log($(".form").serialize());
 			$.ajax({
@@ -90,5 +106,3 @@
 		}
 	})
 </script>
-
-https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wxc73c23da21eccd09&secret= 876c92afd73e2af19b18c9d24b97381a

@@ -80,7 +80,7 @@ createTbale(comment);
 
 //注册用户
 const insertData = function(value){
-    let _sql = "insert into users(name,password) values(?,?)";
+    let _sql = "insert into users(name,password,moment,avator) values(?,?,?,?)";
     //console.log(value);
     return query(_sql,value);
 }
@@ -157,6 +157,24 @@ const updatePostPv = (values) =>{
     return query(_sql,values);
 }
 
+//删除文章评论
+const deletePostDetails = (id) =>{
+    let _sql = `delete from comment where id = ${id}`;
+    return query(_sql);
+}
+
+//删除文章
+const deletePost = (id)=>{
+    let _sql = `delete from posts where id = ${id}`;
+    return query(_sql);
+}
+
+//更新文章
+const updatePost = (values)=>{
+    let _sql = `update posts set name=? title=? content=? uid=? moment=? avator=? comments=? pv=? where id = ?`;
+    return query(_sql,values);
+}
+
 module.exports = {
     insertData,
     findDataByName,
@@ -170,5 +188,8 @@ module.exports = {
     insertComment,
     updatePostComment,
     findCommentByPage,
-    updatePostPv
+    updatePostPv,
+    deletePostDetails,
+    deletePost,
+    updatePost
 }
